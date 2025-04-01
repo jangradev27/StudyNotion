@@ -1,0 +1,195 @@
+@import "tailwindcss";
+
+@theme{
+    /* Font Families */
+    --font-inter: "Inter", sans-serif;
+    --font-edu-sa: "Edu SA Beginner", cursive;
+    --font-mono: "Roboto Mono", monospace;
+
+    /* Max Width */
+    --max-width-maxContent: 1260px;
+    --max-width-contentTab: 650px;
+
+    /* Borders */
+    --border-gradient: linear-gradient(121.74deg, rgba(255, 255, 255, 0.22) -7.75%, rgba(255, 255, 255, 0) 37.38%);
+
+    /* Backgrounds */
+    --bg-gradient-1: linear-gradient(to top, #1FA2FF, #12D8FA, #A6FFCB);
+    --bg-gradient-2: linear-gradient(to top, #FF512F, #F09819);
+    --bg-gradient-3: linear-gradient(to top, #E65C00, #F9D423);
+    --bg-gradient-4: linear-gradient(to top, #833AB4, #FD1D1D, #FCB045);
+    --bg-image-gradient: linear-gradient(to top, #EC008C, #FC6767);
+    /* Colors */
+    --color-transparent: #ffffff00;
+
+    /* Rich Black */
+    --color-rich-black-5: #F1F2FF;
+    --color-rich-black-25: #DBDDEA;
+    --color-rich-black-50: #C5C7D4;
+    --color-rich-black-100: #AFB2BF;
+    --color-rich-black-200: #999DAA;
+    --color-rich-black-300: #838894;
+    --color-rich-black-400: #6E727F;
+    --color-rich-black-500: #585D69;
+    --color-rich-black-600: #424854;
+    --color-rich-black-700: #2C333F;
+    --color-rich-black-800: #161D29;
+    --color-rich-black-900: #000814;
+
+    /* Dark Blue */
+    --color-dark-blue-5: #F1F3FF;
+    --color-dark-blue-25: #CFD4E3;
+    --color-dark-blue-50: #ACB6C8;
+    --color-dark-blue-100: #8A97AC;
+    --color-dark-blue-200: #677990;
+    --color-dark-blue-300: #455A74;
+    --color-dark-blue-400: #223C59;
+    --color-dark-blue-500: #001D3D;
+    --color-dark-blue-600: #001C39;
+    --color-dark-blue-700: #001A36;
+    --color-dark-blue-800: #001932;
+    --color-dark-blue-900: #00172E;
+
+    /* Rich Blue */
+    --color-rich-blue-5: #ECF5FF;
+    --color-rich-blue-25: #C6D6E1;
+    --color-rich-blue-50: #A0B7C3;
+    --color-rich-blue-100: #7A98A6;
+    --color-rich-blue-200: #537988;
+    --color-rich-blue-300: #2D5A6A;
+    --color-rich-blue-400: #073B4C;
+    --color-rich-blue-500: #063544;
+    --color-rich-blue-600: #042E3B;
+    --color-rich-blue-700: #032833;
+    --color-rich-blue-800: #01212A;
+    --color-rich-blue-900: #001B22;
+
+    /* Blue */
+    --color-blue-5: #EAF5FF;
+    --color-blue-25: #B4DAEC;
+    --color-blue-50: #7EC0D9;
+    --color-blue-100: #47A5C5;
+    --color-blue-200: #118AB2;
+    --color-blue-300: #0F7A9D;
+    --color-blue-400: #0C6A87;
+    --color-blue-500: #0A5A72;
+    --color-blue-600: #074B5D;
+    --color-blue-700: #053B48;
+    --color-blue-800: #022B32;
+    --color-blue-900: #001B1D;
+
+    /* Caribbean Green */
+    --color-caribbean-green-5: #C1FFFD;
+    --color-caribbean-green-25: #83F1DE;
+    --color-caribbean-green-50: #44E4BF;
+    --color-caribbean-green-100: #06D6A0;
+    --color-caribbean-green-200: #05BF8E;
+    --color-caribbean-green-300: #05A77B;
+    --color-caribbean-green-400: #049069;
+    --color-caribbean-green-500: #037957;
+    --color-caribbean-green-600: #026144;
+    --color-caribbean-green-700: #014A32;
+    --color-caribbean-green-800: #01321F;
+    --color-caribbean-green-900: #001B0D;
+
+    /* Brown */
+    --color-brown-5: #FFF4C4;
+    --color-brown-25: #FFE395;
+    --color-brown-50: #FFD166;
+    --color-brown-100: #E7BC5B;
+    --color-brown-200: #CFA64F;
+    --color-brown-300: #B89144;
+    --color-brown-400: #A07C39;
+    --color-brown-500: #88662D;
+    --color-brown-600: #705122;
+    --color-brown-700: #593C17;
+    --color-brown-800: #41260B;
+    --color-brown-900: #291100;
+
+    /* Pink */
+    --color-pink-5: #FFF1F1;
+    --color-pink-25: #FBC7D1;
+    --color-pink-50: #F79CB0;
+    --color-pink-100: #F37290;
+    --color-pink-200: #EF476F;
+    --color-pink-300: #D43D63;
+    --color-pink-400: #BA3356;
+    --color-pink-500: #9F294A;
+    --color-pink-600: #841E3E;
+    --color-pink-700: #691432;
+    --color-pink-800: #4F0A25;
+    --color-pink-900: #340019;
+
+    /* Yellow */
+    --color-yellow-5: #FFF970;
+    --color-yellow-25: #FFE83D;
+    --color-yellow-50: #FFD60A;
+    --color-yellow-100: #E7C009;
+    --color-yellow-200: #CFAB08;
+    --color-yellow-300: #B69507;
+    --color-yellow-400: #9E8006;
+    --color-yellow-500: #866A04;
+    --color-yellow-600: #6E5503;
+    --color-yellow-700: #553F02;
+    --color-yellow-800: #3D2A01;
+    --color-yellow-900: #251400;
+
+    /* Pure Greys */
+    --color-pure-greys-5: #F9F9F9;
+    --color-pure-greys-25: #E2E2E2;
+    --color-pure-greys-50: #CCCCCC;
+    --color-pure-greys-100: #B5B5B5;
+    --color-pure-greys-200: #9E9E9E;
+    --color-pure-greys-300: #888888;
+    --color-pure-greys-400: #717171;
+    --color-pure-greys-500: #5B5B5B;
+    --color-pure-greys-600: #444444;
+    --color-pure-greys-700: #2D2D2D;
+    --color-pure-greys-800: #171717;
+    --color-pure-greys-900: #000000;
+}
+
+html, body {
+    overflow-x: hidden;
+}
+
+.homepage_bg {
+    background: url("../src/assets/Images/bghome.svg");
+}
+
+
+html, body{
+    overflow-x: hidden;
+}
+
+.homepage_bg{
+    background: url("../src/assets/Images/bghome.svg");
+}
+
+/* HTML: <div class="spinner"></div> */
+.spinner {
+    width: 100px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid;
+    border-color: lightblue #0000;
+    animation: l1 1s infinite;
+  }
+  @keyframes l1 {to{transform: rotate(.5turn)}}
+
+
+  .bg-gradient-1 {
+    background-image: linear-gradient(to top, #1FA2FF, #12D8FA, #A6FFCB);
+  }
+  .bg-gradient-2 {
+    background-image: linear-gradient(to top, #FF512F, #F09819);
+  }
+  .bg-gradient-3 {
+    background-image: linear-gradient(to top, #E65C00, #F9D423);
+  }
+  .bg-gradient-4 {
+    background-image: linear-gradient(to top, #833AB4, #FD1D1D, #FCB045);
+  }
+  .bg-image-gradient {
+    background-image: linear-gradient(to top, #EC008C, #FC6767);
+  }

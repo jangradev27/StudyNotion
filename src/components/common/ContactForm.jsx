@@ -45,10 +45,10 @@ const ContactForm = ({heading,description}) => {
         </div>
         <p className='text-sm text-rich-black-500'>{description}</p>
 
-        <form className='flex flex-col sm:w-[30rem] gap-5  ' onSubmit={handleSubmit(OnSubmit)} >
-            <div className='flex gap-5 w-full flex-col  md:flex-row justify-between '>
-              <label className="flex flex-col text-rich-black-200 gap-2">
-                <p>First Name<sup className="text-red-400">*</sup></p>
+        <form className='flex flex-col sm:w-[30rem] gap-5  text-lg ' onSubmit={handleSubmit(OnSubmit)} >
+            <div className='flex gap-5 w-full flex-col  md:flex-row justify-between  '>
+              <label className="flex flex-col  text-rich-black-200 gap-2">
+                <p className=' '>First Name<sup className="text-red-400">*</sup></p>
                 <input name='firstname' type="text" {...register("firstname", { required: "First name is required" })}
                   placeholder="Enter Your First Name"
                   className="px-2 outline-none bg-rich-black-800 h-[2.5rem] rounded-md shadow-rich-black-5 shadow-[0px_1px_0px]"

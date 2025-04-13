@@ -57,19 +57,18 @@ exports.ResetPassword=async(req,res)=>{
         }
         const user=await User.findOne({token});
         if(!user){
-            return res.json({
+            return res.status(404).json({
                 success:false, 
                 message:"Token is invalid"
             })
         }
         if(user.ResetPassTime < Date.now()){
-            return res.json({
+            return res.status(403).json({
                 success:false,
                 message:"Token expires"
             })
         }
-        console.log("started")
-        console.log(token)
+        
         const hashedPass= await bcrypt.hash(ConfirmPass,10);
         await User.findOneAndUpdate({token},{password:hashedPass},{new:true})
         

@@ -148,6 +148,24 @@
     --color-pure-greys-800: #171717;
     --color-pure-greys-900: #000000;
 }
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+
+::-webkit-scrollbar-thumb {
+  background: #eab308; /* yellow shade */
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a; /* dark background */
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #eab308 #0f172a;
+}
 
 html, body {
     overflow-x: hidden;
@@ -165,6 +183,7 @@ html, body{
 .homepage_bg{
     background: url("../src/assets/Images/bghome.svg");
 }
+
 
 /* HTML: <div class="spinner"></div> */
 .spinner {

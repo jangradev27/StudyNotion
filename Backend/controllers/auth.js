@@ -127,7 +127,7 @@ exports.SignUp=async(req,res)=>{
 exports.login=async(req,res)=>{
     try{
       const {email,password}=req.body;
-      const user=await User.findOne({email})
+      const user=await User.findOne({email}).populate(["AdditionalDetails","CourseProgess","Courses"]);
      
       if(!user){
         return res.status(404).json({

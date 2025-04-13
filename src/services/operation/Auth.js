@@ -2,7 +2,7 @@ import toast from "react-hot-toast";
 import { Auth } from "../api";
 import { setLoading, setLogout, setToken, setUser } from "../../slices/authSlice";
 import { apiConnector } from "../apiconnector";
-import { setUsersProfile } from "../../slices/profile";
+import { setProfileData, setUsersProfile } from "../../slices/profile";
 
 export const login=(data,navigate)=>{
     
@@ -19,7 +19,9 @@ export const login=(data,navigate)=>{
             toast.success("Login Successful");
             dispatch(setToken(response.data.token));
             const Userimage=response.data?.user?.Image? response.data.user.Image:`https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstname}${response.data.user.lastname}`;
-
+            dispatch(setUsersProfile({...response.data.user,Image:Userimage}))
+            ;
+            dispatch(setProfileData(response.data.user.AdditionalDetails));
             dispatch(setUser({...response.data.user,Image:Userimage}));
             localStorage.setItem("token",JSON.stringify(response.data.token));
             localStorage.setItem("user",JSON.stringify(response.data.user));
@@ -98,7 +100,8 @@ export const Logout=(navigate)=>{
             navigate("/")
         }
         catch(error){
-            toast.error(error.response.data.message);
+            console.log(error)
+            // toast.error(error.response.data.message);
         }
         toast.dismiss(toastid);
         
@@ -107,7 +110,7 @@ export const Logout=(navigate)=>{
 }
 
 export const ResetPasswordToken=(data,setEmailSent)=>{
-    const {email}=data;
+    
     return async(dispatch)=>{
 
         const toastId=toast.loading("loading...");
@@ -140,11 +143,12 @@ export const ResetPassword=(data,setChanged)=>{
     try{
 
         const response=await apiConnector("POST",Auth.ResetPassword,data);
-        console.log(response);
-        if(!response.data.success){
+       
+        if(!response.data.success        ){
             throw new Error(response.data.message);
 
         }
+     
         toast.success("Password Changed SuccessFully");
         setChanged(true)
     }
@@ -152,6 +156,7 @@ export const ResetPassword=(data,setChanged)=>{
         console.log(error)
         toast.error(error.response.data.message);
     }
+    
     toast.dismiss(toastid)
     dispatch(setLoading(false))
    }

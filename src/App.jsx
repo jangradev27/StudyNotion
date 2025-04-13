@@ -12,6 +12,8 @@ import UpdatePassword from './pages/UpdatePassword';
 import AboutUs from './pages/aboutUs';
 import ContactUs from './pages/ContactUs';
 import Dashboard from './pages/Dashboard';
+import Myprofile from './components/core/dashboard/Myprofile';
+import Privateroute from './components/core/auth/Privateroute';
 function App() {
 
   
@@ -20,7 +22,9 @@ function App() {
     <div className="App min-h-screen flex flex-col bg-rich-black-900   ">
       <Navbar/>
      <Routes>
-        <Route path='/' element={<Home/>} />
+        <Route path='/' element={<Openroute>
+          <Home/>
+        </Openroute>} />
 
         <Route path='/login' element={<Openroute>
           <Login/>
@@ -43,9 +47,12 @@ function App() {
 
 
          <Route path='/about' element={<AboutUs/>}/> 
-         <Route path='/dashboard/my-profile' element={<Dashboard/>}/>
 
          <Route path='/contact' element={<ContactUs/>}/>
+         <Route path='/dashboard/*' element={<Privateroute><Dashboard/></Privateroute>}>
+              <Route path='my-profile' element={<Myprofile/>}/>
+          </Route>
+      
      </Routes>
 
      

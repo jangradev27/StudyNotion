@@ -22,7 +22,8 @@ const UserSchema=mongoose.Schema({
         
     },
     AccountType:{
-        type:["Student","Instructor","Admin"],
+        type:String,
+        enum:["Student","Instructor","Admin"],
         required:true,
         
     },

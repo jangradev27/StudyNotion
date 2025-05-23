@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
 import { Auth } from "../api";
-import { setLoading, setLogout, setToken, setUser } from "../../slices/authSlice";
+import { setLoading, setLogout, setToken } from "../../slices/authSlice";
 import { apiConnector } from "../apiconnector";
 import { setProfileData, setUsersProfile } from "../../slices/profile";
 
@@ -20,15 +20,16 @@ export const login=(data,navigate)=>{
             dispatch(setToken(response.data.token));
             const Userimage=response.data?.user?.Image? response.data.user.Image:`https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstname}${response.data.user.lastname}`;
             dispatch(setUsersProfile({...response.data.user,Image:Userimage}))
-            ;
+            
             dispatch(setProfileData(response.data.user.AdditionalDetails));
-            dispatch(setUser({...response.data.user,Image:Userimage}));
+            dispatch(setUsersProfile({...response.data.user,Image:Userimage}));
             localStorage.setItem("token",JSON.stringify(response.data.token));
             localStorage.setItem("user",JSON.stringify(response.data.user));
             navigate("/dashboard/my-profile");
         }
         catch(error){
-            toast.error(error.response.data.message);
+            console.log(error)
+            toast.error(error.response.data.message  || error.message);
         }
         toast.dismiss(toastId)
         dispatch(setLoading(false));
@@ -55,7 +56,7 @@ export const SignUp=(data,navigate)=>{
             navigate("/login");
         }
         catch(error){
-            toast.error(error.response.data.message);
+            toast.error(error.response.data.message  || error.message);
         }
         toast.dismiss(toastId);
         dispatch(setLoading(false));
@@ -72,13 +73,13 @@ export const SendOtp=(data,navigate)=>{
             const response=await apiConnector("POST",Auth.SendOtp_Api,data);
             console.log(response)
             if(!response.data.success){
-                throw new Error(response.data.message)
+                throw new Error(response.data.message )
            }
             toast.success("Otp Send SucessFully ,Please Check you email")
             navigate("/Verify-Otp")
         }
         catch(error){
-            toast.error(error.response.data.message);
+            toast.error(error.response.data.message  || error.message);
         }
         toast.dismiss(toastid);
         dispatch(setLoading(false))
@@ -101,7 +102,7 @@ export const Logout=(navigate)=>{
         }
         catch(error){
             console.log(error)
-            // toast.error(error.response.data.message);
+            toast.error(error.response.data.message  || error.message);
         }
         toast.dismiss(toastid);
         
@@ -126,7 +127,7 @@ export const ResetPasswordToken=(data,setEmailSent)=>{
             setEmailSent(true);
         }
         catch(error){
-            toast.error(error.response.data.message);
+            toast.error(error.response.data.message || error.message);
         }
         toast.dismiss(toastId)
         dispatch(setLoading(false))

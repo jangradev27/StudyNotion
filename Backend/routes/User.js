@@ -13,8 +13,9 @@ const {ResetPassword,ResetPasswordToken}=require("../controllers/ResetPassword.j
 
 // importing middlewares
 // --------------- AUTH ROUTES -------------------
-
+  
 // sendotp
+router.post("/verify-token",isAuth);
 router.post("/sendotp", SendOtp);
 
 // signup
@@ -24,7 +25,7 @@ router.post("/signup", SignUp);
 router.post("/Login", login);
 
 // change password
-router.post("/change-password",isAuth, ChangePassword);
+router.put("/change-password",isAuth, ChangePassword);
 
 
 // ------------------- RESET PASSWORD -------------------

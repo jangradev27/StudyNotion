@@ -5,18 +5,18 @@ const User=require("../models/user");
 // isauth
 exports.isAuth=async(req,res,next)=>{
     try{
-        const token =req.cookies.Token || req.body.token ;
+        const token =req.cookies.Token || req.body.token || req.header("Authorization").replace("Bearer ", "") ;
         if(!token){
-            return res.status(401).json({
+            return res.status(404).json({
                 success:false,
                 message:"token is missing"
-            })
+            }) 
         }
         // verify the token
         try{
             const decode= jwt.verify(token,process.env.JWT_Secret);
             console.log(decode);
-            req.user=decode;
+            req.user=decode; 
             
         }
         catch(err){

@@ -8,10 +8,10 @@ import { TbEdit } from "react-icons/tb";
 
 const Myprofile = () => {
     const{profile:user,profileData}=useSelector(state=>state.profile);
-    console.log(profileData)
+   
     const navigate=useNavigate();
   return (
-    <div className='w-full min-h-screen px-4 flex flex-col justify-around gap-10'>
+    <div className='w-full min-h-screen px-4 flex flex-col justify-around gap-10 '>
         <h1 className='text-3xl text-white w-full '>My Profile</h1>
 
         {/* section1 */}
@@ -45,7 +45,8 @@ const Myprofile = () => {
             </div>
            
         </div>
-
+            
+                    
 
         {/* section 3 */}
         <div className='w-full  flex justify-center   '>

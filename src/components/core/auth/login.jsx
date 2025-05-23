@@ -67,7 +67,7 @@ export const LoginForm = ({ setImage }) => {
                 <input type={`${isShow?"text":"password"}`} {...register("password",{required:"password is required"})} placeholder="Enter Your Password"
                   className="  px-2 outline-none w-full bg-rich-black-800 h-[2.5rem] rounded-md shadow-rich-black-5 shadow-[0px_1px_0px]"
                 />
-                <sub className="absolute z-[2] left-[70%] sm:left-[75%] w-[10rem] translate-y-2"><Link to={"Forgot-Password"} className="text-blue-200">Forgot Password</Link></sub>  
+                <sub className="absolute z-[2] left-[59%] sm:left-[75%] w-[10rem] translate-y-2"><Link to={"Forgot-Password"} className="text-blue-200">Forgot Password</Link></sub>  
                 <button type="button" className="absolute z-[2] left-[90%] md:left-[95%] top-2 h-5" onClick={()=>setShow(!isShow)}>
                   {isShow? (<FaEyeSlash className="h-full"/>):(<FaEye className="h-full"/>)}
                 </button>

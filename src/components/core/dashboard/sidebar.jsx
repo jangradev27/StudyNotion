@@ -14,8 +14,8 @@ import { VscSignOut } from 'react-icons/vsc'
 import ConfirmationModal from '../../common/ConfirmationModal'
 
 const Sidebar = () => {
-  const {Loading:profileLoading}=useSelector((state)=>state.profile);
-  const {Loading:authLoading ,User:user }=useSelector((state)=>state.auth);
+  const {Loading:profileLoading,profile:user}=useSelector((state)=>state.profile);
+  const {Loading:authLoading }=useSelector((state)=>state.auth);
      if (profileLoading || authLoading) {
          return (
            <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
@@ -31,11 +31,9 @@ const Sidebar = () => {
   }
   const dispatch=useDispatch()
   const navigate=useNavigate();
-  useEffect(()=>{
-    console.log("aise hi")
-  },[user])
+ 
   
-  console.log(user)
+  
   return (
    <>
      <div className=' border-white py-4 w-[15%] bg-rich-black-800 flex flex-col gap-2'>
@@ -46,7 +44,7 @@ const Sidebar = () => {
             if(ele.type && user?.AccountType!==ele.type)
               return null;
             
-            console.log(ele);
+        
             return(
               <SidebarLink data={ele} key={ele.id}/>
             )
@@ -56,7 +54,7 @@ const Sidebar = () => {
         }
         <div className=' ml-2.5 border-b-[1px] w-11/12 min-h-3  border-b-rich-black-600 '></div>
         <div className='flex flex-col gap-2'>
-          <SidebarLink data={{name:"Settings",path:"/dashboard/settings",icon:"VscSettingsGear"}}/>
+          <SidebarLink data={{name:"Settings",path:"/dashboard/Settings",icon:"VscSettingsGear"}}/>
           <button onClick={()=>setmodal({
             text1:"Are You Sure ?",
             text2:"You Will be Logged Out",

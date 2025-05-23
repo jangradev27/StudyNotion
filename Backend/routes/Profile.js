@@ -13,13 +13,13 @@ const{isAuth,isAdmin,isInstructor,isStudent}=require("../middlewares/Auth.js")
 // ------------------- PROFILE ROUTES -------------------
 
 // update profile 
-router.post("/update-profile", isAuth, UpdateProfile);
+router.put("/update-profile", isAuth, UpdateProfile);
 
 // update name
-router.post("/update-user", isAuth, updateUserName);
+router.put("/update-user", isAuth, updateUserName);
 
 // update display picture
-router.post("/update-dp", isAuth, updateDisplayPicture);
+router.put("/update-dp", isAuth, updateDisplayPicture);
 
 // get all user details
 router.get("/get-user", isAuth, getAllUserDetails);

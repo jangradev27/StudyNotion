@@ -16,8 +16,8 @@ const ProfileDropDown = () => {
     // Use ClickOutside hook to detect outside clicks
     ClickOutside(menuref, () => setOpen(false));
 
-    const { User } = useSelector((state) => state.auth);
-
+    const { profile:User } = useSelector((state) => state.profile);
+ 
     // Ensure user exists before using properties
     if (!User) return ;
 

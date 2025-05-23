@@ -144,7 +144,7 @@ exports.login=async(req,res)=>{
         }
       const payload={email:user.email,id:user._id,accountType:user.accountType}
       const token=jwt.sign(payload,process.env.JWT_Secret,{
-        expiresIn:"2h"
+        expiresIn:"3d"
       })
       user.token=token;
       user.password=undefined;
@@ -173,37 +173,34 @@ exports.login=async(req,res)=>{
 
 exports.ChangePassword=async(req,res)=>{
     try{
-        const{email,CurrentPass,NewPass,ConfirmNewPass}=req.body;
-        if(!email || !CurrentPass || !NewPass || !ConfirmNewPass){
+        const{password,NewPassword}=req.body;
+        const userId=req.user.id;
+        console.log(userId,password,NewPassword)
+        if(!userId || !password || !NewPassword ){
             return res.status(403).json({
                 success:false,
                 message:"please enter the required fields"
             })
         }
-        const user =await User.findOne({email});
+        const user =await User.findById(userId);
        
-        if(!bcrypt.compare(CurrentPass,user.password)){
+        if(!bcrypt.compare(password,user.password)){
             return res.json({
                 success:false,
                 message:"Current password is incorrect"
             })
         }
-        if(NewPass!==ConfirmNewPass){
-            return res.json({
-                success:false,
-                message:"Confirm password mismatched"
-            })
-        }
        
-        const hashedpass=await bcrypt.hash(NewPass,10);
-        const UpdatePass=await User.findOneAndUpdate({email},{password:hashedpass},{new:true});
+       
+        const hashedpass=await bcrypt.hash(NewPassword,10);
+        const UpdatePass=await User.findOneAndUpdate({_id:userId},{password:hashedpass},{new:true});
         await SendMail(user.email,"Password Change","Your password has been changed at"+ Date.now())
 
         res.status(200).json({
             success:true,
             message:"password changed successfully",
-            UpdatePass,
-            user
+            data:UpdatePass,
+            
         })
         
     }
@@ -212,7 +209,7 @@ exports.ChangePassword=async(req,res)=>{
         res.status(500).json({
             success:false,
             message:"internal server error",
-            error:err
+            error:err.message
         })
     }
 }

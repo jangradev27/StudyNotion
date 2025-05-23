@@ -1,6 +1,8 @@
 
 import './App.css';
-import { Route, Router, Routes } from 'react-router';
+import { useEffect } from 'react';
+import { Route, Router, Routes, useNavigate } from 'react-router';
+import toast from 'react-hot-toast';
 import Home from './pages/Home';
 import OtpSection from './components/core/auth/OtpSection';
 import Navbar from './components/common/Navbar';
@@ -14,12 +16,45 @@ import ContactUs from './pages/ContactUs';
 import Dashboard from './pages/Dashboard';
 import Myprofile from './components/core/dashboard/Myprofile';
 import Privateroute from './components/core/auth/Privateroute';
-function App() {
+import Settings from './components/core/dashboard/Setting/Settings';
+import EnrolledCourses from './components/core/dashboard/EnrolledCourses';
+import { useDispatch, useSelector } from 'react-redux';
+import { apiConnector } from './services/apiconnector';
+import { Auth } from './services/api';
+import { Logout } from './services/operation/Auth';
+import Cart from './components/core/dashboard/cart';
 
+const{VerifyToken_api} =Auth;
+function App() {
+  // const navigate=useNavigate();
+  // const dispatch=useDispatch();
+  // const {token}=useSelector(state=>state.auth);
+  // const verifyToken=async()=>{
+  //   try{
+  //     const response=await apiConnector("POST",VerifyToken_api,null,{
+        
+  //       Authorization:`Bearer ${token}`
+  //     })
+  //     if(!response.data.success){
+  //       throw new Error(response.data.message);
+  //     }
+  //   }
+  //   catch(err){
+  //     console.log(err);
+  //     toast.error(err.response.data.message);
+  //     console.log("hello")
+  //     dispatch(Logout(navigate));
+  //   }
+  // }
+  // useEffect(()=>{
+  //   setTimeout(verifyToken(), 2000);
+  // },[]);
   
-  
+
+
+
   return (
-    <div className="App min-h-screen flex flex-col bg-rich-black-900   ">
+    <div className="App min-h-screen flex flex-col  bg-rich-black-900    ">
       <Navbar/>
      <Routes>
         <Route path='/' element={<Openroute>
@@ -51,6 +86,9 @@ function App() {
          <Route path='/contact' element={<ContactUs/>}/>
          <Route path='/dashboard/*' element={<Privateroute><Dashboard/></Privateroute>}>
               <Route path='my-profile' element={<Myprofile/>}/>
+              <Route path="Settings" element={<Settings/>}/>
+              <Route path='enrolled-courses' element={<EnrolledCourses/>}/>
+              <Route path='cart' element={<Cart/>}/>
           </Route>
       
      </Routes>

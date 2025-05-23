@@ -5,7 +5,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialstate={
     token:localStorage.getItem("token")? JSON.parse(localStorage.getItem("token")):null,
     Loading:false,
-    User:localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
     formData:null
 
 }
@@ -19,9 +18,7 @@ const AuthSlice=createSlice({
         setLoading(state,value){
             state.Loading=value.payload
         },
-        setUser(state,value){
-            state.User=value.payload
-        },
+        
         setFormData(state,value){
             state.formData=value.payload
         },

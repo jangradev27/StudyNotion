@@ -1,9 +1,10 @@
 const Profile = require("../models/profile");
 const User = require("../models/user");
 const Course = require("../models/Course");
-const uploadImage = require("../utils/ImageUpload");
+const {Uploader} = require("../utils/ImageUpload");
 const path = require("path");
 const fs = require("fs");
+const dotenv=require("dotenv").config();
 
 exports.UpdateProfile = async (req, res) => {
     try {
@@ -24,11 +25,12 @@ exports.UpdateProfile = async (req, res) => {
 
         const profileId = user.AdditionalDetails;
         const NewProfile = await Profile.findByIdAndUpdate(profileId, { Gender, DOB, About }, { new: true });
+        const UpdatedUser=await User.findById(userId).populate("AdditionalDetails");
 
         return res.status(200).json({
             success: true,
             message: "Profile updated successfully",
-            data: NewProfile,
+            data: UpdatedUser,
         });
     } catch (err) {
         console.error(err);
@@ -100,26 +102,20 @@ exports.updateDisplayPicture = async (req, res) => {
 
         const displayPicture = req.files.displayPicture;
         const userId = req.user.id;
-        const image = await uploadImage(displayPicture, process.env.FOLDER_NAME, 1000, 1000);
+        const image = await Uploader(displayPicture, process.env.ProfilePicFolder, 1000, 1000);
 
-        const tempFilePath = path.join(__dirname, "..", "uploads", displayPicture.name);
-
-        if (!fs.existsSync(path.dirname(tempFilePath))) {
-            fs.mkdirSync(path.dirname(tempFilePath), { recursive: true });
-        }
-
-        await displayPicture.mv(tempFilePath);
+       
 
         const updatedProfile = await User.findByIdAndUpdate(
             userId,
-            { image: image.secure_url },
+            { Image: image.secure_url },
             { new: true }
-        );
+        ).populate("AdditionalDetails");
 
         return res.json({
             success: true,
             message: "Image updated successfully",
-            data: updatedProfile,
+             data:updatedProfile,
         });
     } catch (error) {
         console.error(error);
@@ -167,11 +163,11 @@ exports.getEnrolledCourses = async (req, res) => {
         const userId = req.user.id;
         let userDetails = await User.findById(userId)
             .populate({
-                path: "courses",
+                path: "Courses",
                 populate: {
-                    path: "courseContent",
+                    path: "CourseContent",
                     populate: {
-                        path: "subSections",
+                        path: "Subsection",
                     },
                 },
             })
@@ -185,16 +181,16 @@ exports.getEnrolledCourses = async (req, res) => {
         }
 
         userDetails = userDetails.toObject();
-        for (let i = 0; i < userDetails.courses.length; i++) {
+        for (let i = 0; i < userDetails.Courses.length; i++) {
             let totalDurationInSeconds = 0;
             let SubsectionLength = 0;
 
-            for (let j = 0; j < userDetails.courses[i].courseContent.length; j++) {
-                totalDurationInSeconds += userDetails.courses[i].courseContent[j].subSections.reduce(
+            for (let j = 0; j < userDetails.Courses[i].CourseContent.length; j++) {
+                totalDurationInSeconds += userDetails.Courses[i].CourseContent[j].Subsection.reduce(
                     (acc, curr) => acc + parseInt(curr.timeDuration),
                     0
                 );
-                SubsectionLength += userDetails.courses[i].courseContent[j].subSections.length;
+                SubsectionLength += userDetails.courses[i].CourseContent[j].Subsection.length;
             }
 
             userDetails.courses[i].totalDuration = convertSecondsToDuration(totalDurationInSeconds);
@@ -212,7 +208,7 @@ exports.getEnrolledCourses = async (req, res) => {
         return res.status(200).json({
             success: true,
             message: "Enrolled courses fetched successfully",
-            data: { enrolledCourses: userDetails.courses },
+             enrolledCourses: userDetails
         });
     } catch (error) {
         console.error(error);

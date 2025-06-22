@@ -14,7 +14,8 @@ export const Auth={
 }
 
 export const CourseApi={
-     getUserEnrolledCourses_api:BASE_URL+"/profile/enrolled-courses"
+     getUserEnrolledCourses_api:BASE_URL+"/profile/enrolled-courses",
+     getInstructorCourses_api:BASE_URL+"/course/getInstructorCourses"
 }
 
 export const SettingApi={

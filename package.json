@@ -9,7 +9,6 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "cd Backend && npm run dev",
-    
     "dev": "concurrently -n \"server,client\" -c \"bgYellow,bgBlue\" \"npm run server\" \"npm run start\""
   },
   "dependencies": {
@@ -19,6 +18,7 @@
     "@types/react-stars": "^2.2.4",
     "axios": "^1.8.2",
     "concurrently": "^9.1.2",
+    "lucide-react": "^0.522.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",

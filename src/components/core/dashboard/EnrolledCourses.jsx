@@ -66,8 +66,8 @@ const EnrolledCourses = () => {
                                     <img src={course.thumbnail} className='rounded-xl w-[4rem] h-[4rem]'/>
                                 </div>
                                 <div className='flex flex-col gap-1'>
-                                    <p className='font-semibold'>{course?.courseName}</p>
-                                    <p className='text-rich-black-100'>{course?.courseDescripton}</p>
+                                    <p className='font-semibold'>{course?.CourseName}</p>
+                                    <p className='text-rich-black-100'>{course?.CourseDescripton}</p>
                                 </div>
                             </div>
                             <div className='p-3 w-[25%] flex items-center text-rich-black-50 '>

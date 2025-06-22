@@ -20,7 +20,7 @@ exports.isAuth=async(req,res,next)=>{
             
         }
         catch(err){
-            res.status(401).json({
+            res.status(401).json({  
               success:false,
               message:"Token is invalid"  
             })
@@ -57,7 +57,7 @@ exports.isStudent=async(req,res,next)=>{
 
 exports.isInstructor=async(req,res,next)=>{
     try{
-        if(req.user.accountType!="Instructor"){
+        if(req.user.accountType!=="Instructor"){
             res.status(401).json({
                 success:false,
                 message:"This is protected route for Instructor only"

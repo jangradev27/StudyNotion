@@ -279,11 +279,11 @@ exports.getFullCourseDetails = async (req, res) => {
 
 exports.getInstructorCourses = async (req, res) => {
     try {
+     
         const instructorId = req.user.id;
 
         const courses = await Course.find({ Instructor: instructorId })
             .sort({ createdAt: -1 });
-
         return res.status(200).json({
             success: true,
             message: "Instructor courses fetched successfully",

@@ -68,7 +68,7 @@ router.post("/getCourseCategory",getCourseCategory);
 // show all tags -[not admin]
 router.get("/AllCategory", getAllCategory);
 
-router.post("/createRating",auth,isStudent,createRating);
+router.post("/createRating",isAuth,isStudent,createRating);
 router.post("/getAverageRating",getAverageRating);
 router.get("/getReviews",getAllRating);
 

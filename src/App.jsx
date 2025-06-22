@@ -25,6 +25,7 @@ import { Logout } from './services/operation/Auth';
 import Cart from './components/core/dashboard/cart';
 import { AccType } from './utils/constants';
 import StudentRoute from './components/core/auth/StudentRoute';
+import InstructorCourse from './components/core/dashboard/InstructorCourses/InstructorCourse';
 
 const{VerifyToken_api} =Auth;
 function App() {
@@ -99,6 +100,12 @@ function App() {
                     <Route path="enrolled-courses" element={<EnrolledCourses />} />
                     </>
                   )
+                }
+
+                {
+                  user?.AccountType ===AccType.Instructor &&(<>
+                    <Route path='my-courses' element={<InstructorCourse/>}/>
+                  </>)
                 }
              
           </Route>

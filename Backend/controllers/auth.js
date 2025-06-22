@@ -142,13 +142,13 @@ exports.login=async(req,res)=>{
                 message: "Password is incorrect",
             });
         }
-      const payload={email:user.email,id:user._id,accountType:user.accountType}
+      const payload={email:user.email,id:user._id,accountType:user.AccountType}
       const token=jwt.sign(payload,process.env.JWT_Secret,{
         expiresIn:"3d"
       })
       user.token=token;
       user.password=undefined;
-      const options={
+      const options={ 
         expires:new Date(Date.now()+ 3*24*60*60*1000)
       }
       

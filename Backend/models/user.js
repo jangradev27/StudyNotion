@@ -11,6 +11,9 @@ const UserSchema=mongoose.Schema({
         required:true,
         trim:true
     },
+    GoogleId:{
+        type:String,
+    },
     email:{
         type:String,
         required:true,

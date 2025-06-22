@@ -1,5 +1,6 @@
 const Section=require("../models/Section");
 const Course=require("../models/Course");
+const SubSection = require("../models/SubSection");
 
 exports.CreateSection=async(req,res)=>{
     try{
@@ -37,12 +38,14 @@ exports.CreateSection=async(req,res)=>{
 exports.DeleteSection=async(req,res)=>{
     try{
         const {SectionId}=req.body;
+        const section=await Section.findById(SectionId);
         if(!SectionId){
             return res.status(400).json({
                 success:false,
                 message:"Please enter the all fields"
             })
         }
+		await SubSection.deleteMany({_id: {$in: Section.Subsection}});
         await Section.findByIdAndDelete(SectionId);
         //Do we need to delete the from course schema
         return res.status(200).json({

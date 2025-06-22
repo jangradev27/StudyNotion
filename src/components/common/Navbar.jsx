@@ -93,10 +93,10 @@ export const Navbar = () => {
         {/* Right Section (Cart, Auth Links, Profile) */}
         <div className="flex gap-4 items-center">
           {/* Cart (Only for non-instructors) */}
-          {User && User.accountType !== AccType.Instructor && (
+          {User && User.AccountType !== AccType.Instructor && (
             <Link to="/dashboard/cart" className="relative">
               <IoCartOutline size={24} />
-              {totalItems > 0 && <sup className="absolute z-[2] bg-red-500 w-4 h-4 text-rich-black-600 text-sm font-bold flex justify-center items-center rounded-3xl text-sm">{totalItems}</sup>}
+              {totalItems > 0 && <sup className="absolute z-[2] bg-red-500 w-4 h-4 text-rich-black-600 font-bold flex justify-center items-center rounded-3xl text-sm">{totalItems}</sup>}
             </Link>
           )}
 

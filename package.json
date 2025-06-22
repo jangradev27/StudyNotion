@@ -9,12 +9,14 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "cd Backend && npm run dev",
+    
     "dev": "concurrently -n \"server,client\" -c \"bgYellow,bgBlue\" \"npm run server\" \"npm run start\""
   },
   "dependencies": {
     "@ramonak/react-progress-bar": "^5.4.0",
     "@reduxjs/toolkit": "^2.6.1",
     "@tailwindcss/vite": "^4.0.12",
+    "@types/react-stars": "^2.2.4",
     "axios": "^1.8.2",
     "concurrently": "^9.1.2",
     "react": "^19.0.0",
@@ -23,8 +25,11 @@
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
     "react-otp-input": "^3.1.1",
+    "react-rating": "^2.0.5",
+    "react-rating-stars-component": "^2.2.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.3.0",
+    "react-router-dom": "^7.6.0",
+    "react-stars": "^2.2.5",
     "react-toastify": "^11.0.5",
     "react-type-animation": "^3.2.0"
   },

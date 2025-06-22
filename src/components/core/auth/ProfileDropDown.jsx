@@ -24,6 +24,7 @@ const ProfileDropDown = () => {
     const handleLogout=()=>{
         dispatch(Logout(navigate));
     }
+    
 
     return (
         <div className="relative">

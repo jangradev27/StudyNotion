@@ -14,7 +14,7 @@ const ProfileSchema = mongoose.Schema({
         required: false, // Make this optional
         trim: true
     }
-   
+    
 });
 
 module.exports = mongoose.model("Profile", ProfileSchema);

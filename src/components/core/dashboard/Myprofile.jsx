@@ -15,8 +15,8 @@ const Myprofile = () => {
         <h1 className='text-3xl text-white w-full '>My Profile</h1>
 
         {/* section1 */}
-        <div className='w-full flex justify-center items-center'>
-            <div className='bg-rich-black-700 flex items-center justify-around rounded-lg w-[90%] ' >
+        <div className='w-full flex justify-center items-center '>
+            <div className='bg-rich-black-700 flex items-center justify-around rounded-lg w-[90%] px-3 ' >
                 <div className='flex w-[80%] h-[7rem] justify-around gap-5 items-center '>
                     <img src={user?.Image} alt={`profile-${user?.firstname}`}
                     className='aspect-square w-[4rem] h-[4rem] rounded-full object-cover'></img>
@@ -32,7 +32,7 @@ const Myprofile = () => {
         </div>
         {/* Section2  */}
         <div className='w-full flex justify-center items-center'>
-            <div className='bg-rich-black-700 flex items-center justify-around rounded-lg w-[90%] ' >
+            <div className='bg-rich-black-700 flex items-center justify-around rounded-lg w-[90%] px-3   ' >
                 <div className='flex flex-col w-[80%] min-h-[7rem] justify-center gap-5 items-start  '>
                     <p className='font-[500] text-rich-black-100 text-2xl'>About</p>
                     {
@@ -50,14 +50,14 @@ const Myprofile = () => {
 
         {/* section 3 */}
         <div className='w-full  flex justify-center   '>
-            <div className='bg-rich-black-700 flex flex-col justify-around items-center   rounded-lg w-[90%] min-h-[18rem]'>
-                <div className='flex justify-between items-center  w-[93.9%]   '>
+            <div className='bg-rich-black-700 flex flex-col justify-around items-center   rounded-lg w-[90%] min-h-[18rem] px-2'>
+                <div className='flex justify-between items-center  w-[94%]   '>
                     <p className='w-[50%] font-bold text-white text-xl'>Personal Details</p>
                     <IconBtn text={"Edit"} icon={<TbEdit />}  customClasses={` text-lg rounded-xl  transition-all hover:scale-95 cursor-pointer bg-yellow-200 p-2 h-[3rem] flex justify-center items-center gap-2 font-[500] w-[5rem]`}
                     onclick={()=>{navigate("/dashboard/Settings")}}
                 />
                 </div>
-                <div className='flex w-[95%] flex-col justify-around gap-10 p-2'>
+                <div className='flex w-[94%] flex-col justify-around gap-10 '>
                     <div className='flex justify-between'>
                        <div className='w-[50%] justify-start'>
                             <p className='text-rich-black-200 text-sm font-[500]'>FirstName</p>

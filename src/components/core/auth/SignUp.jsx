@@ -39,7 +39,7 @@ export const SignUpForm = ({ setImage }) => {
       toast.error("Password Mismatched");
       return;
     }
-    dispatch(setFormData(data));  
+    dispatch(setFormData(data));
     dispatch(SendOtp(data,navigate,));
   };
 
@@ -54,7 +54,7 @@ export const SignUpForm = ({ setImage }) => {
             onClick={() => handleChange(element.AccountType, index)}
             className={`${selectedIndex === index ? "text-white bg-rich-black-900" : "text-rich-black-200"}
               w-[100px] h-[22px] p-4 transition-all duration-300 font-inter flex justify-center items-center 
-              hover:bg-rich-black-900 text-[16px] rounded-3xl`}
+              hover:bg-rich-black-900 text-[16px] cursor-pointer rounded-3xl`}
           >
             {element.title}
           </button>

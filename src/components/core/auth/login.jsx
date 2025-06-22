@@ -48,7 +48,7 @@ export const LoginForm = ({ setImage }) => {
       <div className="flex bg-rich-black-800 shadow-[0px_2px_0px] shadow-rich-black-50 justify-around  h-[44px] w-[230px]  rounded-[5rem] items-center ">
           {
             BUTTONS.map((element,index)=><button type="button" key={index} onClick={()=>{handleChange(element.AccountType,index)}} 
-              className={`${selectedIndex===index?  "text-white bg-rich-black-900":"text-rich-black-200" } w-[100px] h-[22px] p-4 transition-all duration-300  font-inter flex justify-center items-center hover:bg-rich-black-900   text-[16px] rounded-3xl  `}
+              className={`${selectedIndex===index?  "text-white bg-rich-black-900":"text-rich-black-200" } cursor-pointer w-[100px] h-[22px] p-4 transition-all duration-300  font-inter flex justify-center items-center hover:bg-rich-black-900   text-[16px] rounded-3xl  `}
             >{element.title}</button>)
           }
       </div>

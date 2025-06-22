@@ -171,6 +171,7 @@ exports.login=async(req,res)=>{
     }
 } 
 
+
 exports.ChangePassword=async(req,res)=>{
     try{
         const{password,NewPassword}=req.body;

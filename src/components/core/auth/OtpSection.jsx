@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OTPInput from "react-otp-input";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { SignUp } from "../../../services/operation/Auth";
+import { SendOtp, SignUp } from "../../../services/operation/Auth";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { MdRestore } from "react-icons/md";
@@ -22,12 +22,12 @@ const OtpSection = () => {
     }
     const ResendOtp=()=>{
         const data={
-            ...formData,otp
+            ...formData
         }
         console.log(data)
-        dispatch(SignUp(data,navigate))
+        dispatch(SendOtp(data,navigate))
     }
-
+ 
     return (
         <div className="flex justify-center items-center min-h-screen">
             <div className="flex flex-col gap-5  rounded-lg shadow-lg">
@@ -67,7 +67,7 @@ const OtpSection = () => {
                                 <p>Back to login</p>
                         </div>
                     </Link>
-                    <button onClick={()=>ResendOtp()} className=" text-blue-300 hover:text-blue-400 transition-colors cursor-pointer">
+                    <button onClick={()=>ResendOtp()} type="button" className=" text-blue-300 hover:text-blue-400 transition-colors cursor-pointer">
                         <div className="flex justify-center items-center  gap-2" >
                         <MdRestore/>
                         Resend it

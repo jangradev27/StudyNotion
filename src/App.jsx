@@ -1,6 +1,6 @@
 
 import './App.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Route, Router, Routes, useNavigate } from 'react-router';
 import toast from 'react-hot-toast';
 import Home from './pages/Home';
@@ -23,9 +23,12 @@ import { apiConnector } from './services/apiconnector';
 import { Auth } from './services/api';
 import { Logout } from './services/operation/Auth';
 import Cart from './components/core/dashboard/cart';
+import { AccType } from './utils/constants';
+import StudentRoute from './components/core/auth/StudentRoute';
 
 const{VerifyToken_api} =Auth;
 function App() {
+  const {profile:user}=useSelector(state=>state.profile)
   // const navigate=useNavigate();
   // const dispatch=useDispatch();
   // const {token}=useSelector(state=>state.auth);
@@ -66,10 +69,10 @@ function App() {
         </Openroute>}/>
 
         <Route path='/signup' element={<Openroute>
-          <SignUp/>
+          <SignUp />
         </Openroute>}/>
         <Route path='/Verify-Otp' element={<Openroute>
-          <OtpSection/>
+          <OtpSection />
         </Openroute>}/>
 
         <Route path="/login/Forgot-Password" element={<Openroute>
@@ -87,8 +90,17 @@ function App() {
          <Route path='/dashboard/*' element={<Privateroute><Dashboard/></Privateroute>}>
               <Route path='my-profile' element={<Myprofile/>}/>
               <Route path="Settings" element={<Settings/>}/>
-              <Route path='enrolled-courses' element={<EnrolledCourses/>}/>
-              <Route path='cart' element={<Cart/>}/>
+            
+                        
+                {
+                  user?.AccountType === AccType.Student && (
+                    <>
+                    <Route path="cart" element={<Cart />} />
+                    <Route path="enrolled-courses" element={<EnrolledCourses />} />
+                    </>
+                  )
+                }
+             
           </Route>
       
      </Routes>

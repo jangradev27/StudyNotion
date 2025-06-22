@@ -5,11 +5,10 @@ require("dotenv").config();
 
 exports.CreateSubSection=async(req,res)=>{
     try{
-        const {SectionID,title,TimeDuration,description}=req.body;
-       console.log(SectionID,title,TimeDuration,description)
+        const {SectionID,title,description}=req.body;
         const Video=req.files.Video;
         console.log(Video)
-        if(!title || !SectionID || !TimeDuration || !description ||!Video){
+        if(!title || !SectionID ||  !description ||!Video){
             return res.status(400).json({
                 success:false,
                 message:"please enter the all fields"
@@ -17,7 +16,7 @@ exports.CreateSubSection=async(req,res)=>{
         }
         const Videodata=await Uploader(Video,process.env.Folder);
         console.log(Videodata);
-        const newSubSection=await SubSection.create({title,TimeDuration,description,VideoUrl:Videodata.secure_url});
+        const newSubSection=await SubSection.create({title,TimeDuration:Videodata.duration,description,VideoUrl:Videodata.secure_url});
         const NewSection = await Section.findByIdAndUpdate(
             SectionID,
             { $push: { Subsection: newSubSection._id } },

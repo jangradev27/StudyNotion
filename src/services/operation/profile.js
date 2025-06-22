@@ -17,6 +17,7 @@ export const UpdateProfilePic=(token,formdata)=>{
             "Content-Type":"multipart/form-data",
             Authorization:`Bearer ${token}`
         });
+        
         console.log(response)
         if(!response.data.success){
             throw new Error(response.data.message);

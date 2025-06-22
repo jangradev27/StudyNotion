@@ -82,7 +82,6 @@ export const SendOtp=(data,navigate)=>{
             toast.error(error.response.data.message  || error.message);
         }
         toast.dismiss(toastid);
-        dispatch(setLoading(false))
     }
     
 }

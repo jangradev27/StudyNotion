@@ -2,7 +2,7 @@ const  express=require("express")
 const router = express.Router();
 
 // importing course controllers
-const {CreateCourse,getAllcourse,getCourseDetails}=require("../controllers/course.js");
+const {createCourse,getAllCourses,getCourseDetails, editCourse, getInstructorCourses, deleteCourse, getFullCourseDetails}=require("../controllers/course.js");
 
 // importing section controllers
 const {CreateSection,UpdateSection,DeleteSection}=require("../controllers/sections.js")
@@ -19,19 +19,26 @@ const {UpdateCourseProgess}=require("../controllers/courseProgess.js")
 // importing middlewares
 const{isAuth,isAdmin,isInstructor,isStudent}=require("../middlewares/Auth.js")
 
-
+const {createRating,getAverageRating,getAllRating, getCourseRating}=require("../controllers/RatingAndReviews.js")
 
 // ------------------- COURSE ROUTES -------------------
 // create course
-router.post("/CreateCourse",isAuth, isInstructor, CreateCourse);
+router.post("/CreateCourse",isAuth, isInstructor, createCourse);
 
 // get all courses
-router.get("/getAllCourse", isAuth,getAllcourse);
+router.get("/getAllCourse", isAuth,getAllCourses);
 
-// update course progress
+router.post("/getCourseDetails",getCourseDetails);
+
+router.post("/getFullCourseDetails",isAuth,getFullCourseDetails)
+
 router.post("/UpdateCourseProgress", isAuth, isStudent,UpdateCourseProgess);
 
+router.post("/editCourse",isAuth,isInstructor,editCourse)
 
+router.get("/getInstructorCourses",isAuth,isInstructor,getInstructorCourses)
+
+router.delete("/deleteCourse",deleteCourse);
 // ------------------- SECTION ROUTES -------------------
 // creat section
 router.post("/CreateSection", isAuth, isInstructor, CreateSection);
@@ -57,10 +64,15 @@ router.post("DeleteSubSection", isAuth, isInstructor, deleteSubsection);
 // ------------------- CATEGORY ROUTES [ADMIN ONLY] -------------------
 // create tag
 router.post("/CreateCategory", isAuth, isAdmin, CreateCategory);
-
+router.post("/getCourseCategory",getCourseCategory);
 // show all tags -[not admin]
 router.get("/AllCategory", getAllCategory);
 
+router.post("/createRating",auth,isStudent,createRating);
+router.post("/getAverageRating",getAverageRating);
+router.get("/getReviews",getAllRating);
+
+router.post("/getCourseRating",getCourseRating);
 
 // export router
 module.exports=router;

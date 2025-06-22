@@ -15,7 +15,7 @@ const RatingSchema=mongoose.Schema({
     },
     Review:{
         type:String,
-        required:true
+        required:true 
     }
 
 })

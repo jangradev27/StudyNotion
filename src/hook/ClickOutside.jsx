@@ -4,6 +4,7 @@ import { useEffect } from "react";
 export default function useDetectOutsideClick( ref , handler) {
     useEffect(()=>{
         const listener = (event) => {
+           
             if(ref.current && !ref.current.contains(event.target)) {
                 handler();
             }

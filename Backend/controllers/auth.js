@@ -130,7 +130,7 @@ exports.login=async(req,res)=>{
       const user=await User.findOne({email}).populate(["AdditionalDetails","CourseProgess","Courses"]);
      
       if(!user){
-        return res.status(404).json({
+        return res.status(404).json({ 
             success:false,
             message:"user not found"
         })

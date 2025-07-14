@@ -21,44 +21,30 @@ import EnrolledCourses from './components/core/dashboard/EnrolledCourses';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiConnector } from './services/apiconnector';
 import { Auth } from './services/api';
-import { Logout } from './services/operation/Auth';
 import Cart from './components/core/dashboard/cart';
 import { AccType } from './utils/constants';
 import StudentRoute from './components/core/auth/StudentRoute';
 import InstructorCourse from './components/core/dashboard/InstructorCourses/InstructorCourse';
+import AddCourse from './components/core/dashboard/AddCourse';
+import NotFound from './components/common/NotFound';
+import { getUserDetails } from './services/operation/profile';
 
 const{VerifyToken_api} =Auth;
 function App() {
   const {profile:user}=useSelector(state=>state.profile)
-  // const navigate=useNavigate();
-  // const dispatch=useDispatch();
-  // const {token}=useSelector(state=>state.auth);
-  // const verifyToken=async()=>{
-  //   try{
-  //     const response=await apiConnector("POST",VerifyToken_api,null,{
-        
-  //       Authorization:`Bearer ${token}`
-  //     })
-  //     if(!response.data.success){
-  //       throw new Error(response.data.message);
-  //     }
-  //   }
-  //   catch(err){
-  //     console.log(err);
-  //     toast.error(err.response.data.message);
-  //     console.log("hello")
-  //     dispatch(Logout(navigate));
-  //   }
-  // }
-  // useEffect(()=>{
-  //   setTimeout(verifyToken(), 2000);
-  // },[]);
-  
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+  useEffect(()=>{
+    if(localStorage.getItem("token")){
+      const token=JSON.parse(localStorage.getItem("token"));
+      dispatch(getUserDetails(token,navigate));
+    }
+  },[])
 
 
 
   return (
-    <div className="App min-h-screen flex flex-col  bg-rich-black-900    ">
+    <div className="App min-h-screen flex flex-col  bg-rich-black-900  overflow-hidden font-inter ">
       <Navbar/>
      <Routes>
         <Route path='/' element={<Openroute>
@@ -105,10 +91,17 @@ function App() {
                 {
                   user?.AccountType ===AccType.Instructor &&(<>
                     <Route path='my-courses' element={<InstructorCourse/>}/>
+                    <Route path='add-course' element={<AddCourse/>}/>
                   </>)
                 }
              
+
+
+             
           </Route>
+
+
+          <Route path='*' element={<NotFound/>}/>
       
      </Routes>
 

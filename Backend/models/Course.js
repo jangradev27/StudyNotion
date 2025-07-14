@@ -13,7 +13,7 @@ const CourseSchema=mongoose.Schema({
     },
     Instructor:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"Instructor"
+        ref:"User"
     },
     WhatLearn:{
         type:String,
@@ -49,9 +49,9 @@ const CourseSchema=mongoose.Schema({
         ref:"User",
     
     }],
-    instructions:{
+    instructions:[{
         type:String
-    },
+    }],
     status:{
         type:String,
         enum:["Draft","Published"]
@@ -59,6 +59,9 @@ const CourseSchema=mongoose.Schema({
     CreatedAt:{
         type:Date,
         default:Date.now
+    },
+    totalDuration:{
+        type:String
     }
 
 })

@@ -12,7 +12,7 @@ export function paymentSuccessEmail(name, amount, orderId, paymentId) {
                   font-size: 16px;
                   line-height: 1.4;
                   color: #333333;
-                  margin: 0;
+                  margin: 0; 
                   padding: 0;
               }
       

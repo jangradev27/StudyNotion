@@ -36,7 +36,7 @@ const Sidebar = () => {
   
   return (
    <>
-     <div className=' border-white py-4 w-[15%] bg-rich-black-800 flex flex-col gap-2'>
+     <div className=' border-white py-4 w-[17rem] bg-rich-black-800 flex flex-col gap-2'>
         {
           sidebarLinks.map((ele,index)=>{
              

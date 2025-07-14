@@ -15,9 +15,8 @@ exports.isAuth=async(req,res,next)=>{
         // verify the token
         try{
             const decode= jwt.verify(token,process.env.JWT_Secret);
-            console.log(decode);
             req.user=decode; 
-            
+            next();
         }
         catch(err){
             res.status(401).json({  
@@ -25,7 +24,7 @@ exports.isAuth=async(req,res,next)=>{
               message:"Token is invalid"  
             })
         }
-        next();
+        
     }
     catch(err){
         res.status(500).json({

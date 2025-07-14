@@ -4,3 +4,7 @@ export const AccType={
     Admin:"Admin"
 }
 
+export const COURSE_STATUS={
+    PUBLISHED:"Published",
+    DRAFT:"Draft"
+}

@@ -15,7 +15,7 @@ const {ResetPassword,ResetPasswordToken}=require("../controllers/ResetPassword.j
 // --------------- AUTH ROUTES -------------------
   
 // sendotp
-router.post("/verify-token",isAuth);
+router.get("/verify-token",isAuth);
 router.post("/sendotp", SendOtp);
 
 // signup

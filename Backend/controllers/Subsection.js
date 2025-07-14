@@ -7,7 +7,6 @@ exports.CreateSubSection=async(req,res)=>{
     try{
         const {SectionID,title,description}=req.body;
         const Video=req.files.Video;
-        console.log(Video)
         if(!title || !SectionID ||  !description ||!Video){
             return res.status(400).json({
                 success:false,
@@ -21,13 +20,12 @@ exports.CreateSubSection=async(req,res)=>{
             SectionID,
             { $push: { Subsection: newSubSection._id } },
             { new: true }
-        ).populate('Subsection'); // Make sure to populate SubSection field
-
-        console.log(NewSection);
+        ).populate({path:"Subsection"});
+         // Make sure to populate SubSection field
         return res.status(200).json({
             success:true,
             message:"Subsection created successfully",
-            Data:NewSection
+            data:NewSection
         })
     }
     catch(err){

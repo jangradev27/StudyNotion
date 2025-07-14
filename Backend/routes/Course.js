@@ -32,9 +32,9 @@ router.post("/getCourseDetails",getCourseDetails);
 
 router.post("/getFullCourseDetails",isAuth,getFullCourseDetails)
 
-router.post("/UpdateCourseProgress", isAuth, isStudent,UpdateCourseProgess);
+router.put("/UpdateCourseProgress", isAuth, isStudent,UpdateCourseProgess);
 
-router.post("/editCourse",isAuth,isInstructor,editCourse)
+router.put("/editCourse",isAuth,isInstructor,editCourse)
 
 router.get("/getInstructorCourses",isAuth,isInstructor,getInstructorCourses)
 
@@ -44,10 +44,10 @@ router.delete("/deleteCourse",deleteCourse);
 router.post("/CreateSection", isAuth, isInstructor, CreateSection);
 
 // update section
-router.post("/UpdateSection", isAuth, isInstructor, UpdateSection);
+router.put("/UpdateSection", isAuth, isInstructor, UpdateSection);
 
 // delete section
-router.post("/DeleteSubSection", isAuth, isInstructor, DeleteSection);
+router.delete("/DeleteSection", isAuth, isInstructor, DeleteSection);
 
 
 // ------------------- SUB-SECTION ROUTES -------------------
@@ -55,10 +55,10 @@ router.post("/DeleteSubSection", isAuth, isInstructor, DeleteSection);
 router.post("/CreateSubSection", isAuth, isInstructor, CreateSubSection);
 
 // update sub-section
-router.post("/UpdateSubSection", isAuth, isInstructor, UpdateSubSection);
+router.put("/UpdateSubSection", isAuth, isInstructor, UpdateSubSection);
 
 // delete sub-section
-router.post("DeleteSubSection", isAuth, isInstructor, deleteSubsection);
+router.delete("/DeleteSubSection", isAuth, isInstructor, deleteSubsection);
 
 
 // ------------------- CATEGORY ROUTES [ADMIN ONLY] -------------------

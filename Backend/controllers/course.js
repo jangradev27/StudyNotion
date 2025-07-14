@@ -1,10 +1,18 @@
 const Course=require("../models/Course");
+const Section =require("../models/Section")
 const Category=require("../models/Category");
+const SubSection=require("../models/SubSection")
 const User=require("../models/user")
 const {Uploader}=require("../utils/ImageUpload");
 const dotenv=require("dotenv")
 dotenv.config()
 
+
+const convertSecondsToDuration = (totalSeconds) => {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  return `${hours}h ${minutes}m`;
+};
 exports.createCourse = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -16,12 +24,14 @@ exports.createCourse = async (req, res) => {
       tag: _tag,
       category,
       status,
-      instructions,
+      instructions:_instructions,
     } = req.body;
-
-    const thumbnail = req.files?.thumbnailImage;
+    console.log(req.body);
+    console.log(_tag);
+    const thumbnail = req.files?.thumbnail;
 
     const tag = JSON.parse(_tag);
+    const instructions=JSON.parse(_instructions);
 
     if (
       !CourseName ||
@@ -41,7 +51,8 @@ exports.createCourse = async (req, res) => {
     if (!status) status = "Draft";
 
     const instructorDetails = await User.findById(userId);
-    if (!instructorDetails || instructorDetails.accountType !== "Instructor") {
+    console.log(instructorDetails)
+    if (!instructorDetails || instructorDetails.AccountType !== "Instructor") {
       return res.status(404).json({ success: false, message: "Instructor not found" });
     }
 
@@ -50,7 +61,7 @@ exports.createCourse = async (req, res) => {
       return res.status(404).json({ success: false, message: "Category not found" });
     }
 
-    const thumbnailImage = await uploadImageToCloudinary(thumbnail, process.env.FOLDER_NAME);
+    const thumbnailImage = await Uploader(thumbnail, process.env.FOLDER_NAME);
 
     const newCourse = await Course.create({
       CourseName,
@@ -127,11 +138,7 @@ exports.getAllCourses = async (req, res) => {
 };
 
 
-const convertSecondsToDuration = (totalSeconds) => {
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  return `${hours}h ${minutes}m`;
-};
+
 
 exports.getCourseDetails = async (req, res) => {
   try {
@@ -140,7 +147,7 @@ exports.getCourseDetails = async (req, res) => {
     const courseDetails = await Course.findById(courseId)
       .populate({
         path: "Instructor",
-        populate: { path: "additionalDetails" },
+        populate: { path: "AdditionalDetails" },
       })
       .populate("category")
       .populate("RatingReviews")
@@ -148,7 +155,7 @@ exports.getCourseDetails = async (req, res) => {
         path: "CourseContent",
         populate: {
           path: "Subsection",
-          select: "-VideoUrl",
+         
         },
       })
       .exec();
@@ -166,7 +173,7 @@ exports.getCourseDetails = async (req, res) => {
         totalDurationInSeconds += parseInt(sub.TimeDuration);
       });
     });
-
+    console.log(totalDurationInSeconds);
     const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
 
     return res.status(200).json({
@@ -282,12 +289,26 @@ exports.getInstructorCourses = async (req, res) => {
      
         const instructorId = req.user.id;
 
-        const courses = await Course.find({ Instructor: instructorId })
+        const courses = await Course.find({ Instructor: instructorId }).populate({path:"CourseContent",populate:{path:"Subsection"}})
             .sort({ createdAt: -1 });
+
+       const Courses = courses.map((course) => {
+      let totalDurationInSeconds = 0;
+
+      course.CourseContent.forEach((section) => {
+        section.Subsection.forEach((sub) => {
+          totalDurationInSeconds += Number(sub.TimeDuration || 0);
+        });
+      });
+
+      course.totalDuration = convertSecondsToDuration(totalDurationInSeconds);
+      return course;
+    });
+        console.log(Courses)
         return res.status(200).json({
             success: true,
             message: "Instructor courses fetched successfully",
-            data: courses,
+            data:Courses,
         });
 
     } catch (err) {
@@ -313,22 +334,33 @@ exports.deleteCourse = async (req, res) => {
         }
 
         // Remove course from instructor's list
+        
         await User.findByIdAndUpdate(course.Instructor, {
             $pull: { Courses: CourseId }
         });
+        const EnrolledStudents=course.EnrolledStudents;
+        for(const id of EnrolledStudents){
+          await User.findByIdAndUpdate(id,{$pull:{Courses:CourseId}});
+        }
 
-        // Remove ratings, content, and sections related to this course
-        await Promise.all([
-            RatingReview.deleteMany({ Course: CourseId }),
-            Section.deleteMany({ CourseId }),
-            Subsection.deleteMany({ CourseId })
-        ]);
+        const Sections=course.CourseContent;
 
+        for(const sec of Sections){
+          const subsection=sec.Subsection;
+          for(const sub of subsection){
+            await SubSection.findByIdAndDelete(sub);
+          }
+          await Section.findByIdAndDelete(sec)
+        }
+       
         await course.deleteOne();
+
+        // const Courses =await Course.find({Instructor:req.user.id});
 
         return res.status(200).json({
             success: true,
             message: "Course deleted successfully",
+          
         });
 
     } catch (err) {

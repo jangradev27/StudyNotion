@@ -1,39 +1,36 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
 import TimeDisplay from '../../../common/TimeDisplay';
 import { TbSquareRoundedCheck } from 'react-icons/tb';
 import { MdDeleteForever, MdDeleteOutline } from "react-icons/md";
 import CTAButton from '../../Homepage/CTAButton';
-import { getInstructorCourses } from '../../../../services/operation/Course';
-const CourseData = [{
-  CourseName: "Introduction to Design",
-  CourseDescription: "This course provides an overview of the design process, design thinking, and basic design principles.",
-  status: "Published",
-  CreatedAt:"2023-04-27T17:15:00.000Z",
-  Duration: "20h 10m",
-  price: "₹520",
-  thumbnail: "https://res.cloudinary.com/dgrtpvmnf/image/upload/v1748760467/tawcwwindbgh9flwsqbw.jpg", // replace with actual URL if needed
-}];
+import { Edit2Icon, XCircleIcon } from 'lucide-react';
+
+import { getCourseDetails, getInstructorCourses } from '../../../../services/operation/Course';
+
 
 
 const InstructorCourse = () => {
   
   const{Loading,token}=useSelector(state=>state.auth);
-
+  const dispatch=useDispatch();
   const[Courses,setCourses]=useState([]);
+  const navigate=useNavigate();
+
+
   const getData=async()=>{
     const response=await getInstructorCourses(token);
     setCourses(response);
-    console.log(response)
   }
 
-  const EditButton=()=>{
-    console.log("edit button clicked");
+  const EditButton=(CourseId)=>{
+    const data={courseId:CourseId};
+    dispatch(getCourseDetails(data,navigate));
   }
 
-  const Deletebutton=()=>{
-    console.log("delete button clicked");
+  const Deletebutton=(CourseId)=>{
+  
   }
   
 
@@ -43,18 +40,18 @@ const InstructorCourse = () => {
   },[])
 
   return (
-     <div className='text-white w-full min-h-[calc(100vh-3.5rem)] p-2 flex flex-col  justify-start gap-10 '>
+     <div className='text-white min-w-[40rem] min-h-[calc(100vh-3.5rem)] p-2 flex flex-col  justify-start gap-10 '>
             <div className=' text-3xl p-3 flex justify-between'>
                 <div>My Courses</div>
-                <CTAButton children={"New"} active={true} linkTo={"/CreateCourse"}/>
+                <CTAButton children={"New"} active={true} linkTo={"/dashboard/add-course"}/>
             </div>
             {
                 Loading?(<div className='flex w-full h-full justify-center items-center'>
                     <div className='spinner'>
                     </div>
                 </div>):!Courses.length?(<p className='w-full text-center'>No Course Created yet</p>):(
-                  <div className='  border-[1px] border-rich-black-500 rounded-[10px_10px_0_0] '>
-                     <table className=' w-full   '>
+                  <div className='  border-[1px]  border-rich-black-500 rounded-[10px_10px_0_0]  '>
+                     <table className=' w-full  '>
                         <thead >
                           <tr className= ' text-rich-black-100 rounded-[10px_10px_0_0]  h-[3rem] '>
                             <th className='w-[60%]  p-2 text-start rounded-[10px_0px_0_0] bg-rich-black-800'>Courses</th>
@@ -66,7 +63,7 @@ const InstructorCourse = () => {
 
 
                         {
-                          Courses.map((course,index)=><tr key={index} className="p-2  h-full w-full">
+                          Courses.map((course,index)=><tr key={index} className={`p-2  h-full w-full ${index!==Courses.length-1?"border-b-[1px] border-rich-black-200":""}`}>
                                   <td className='w-[60%] p-2 '>
                                     <div className='flex  gap-3'>
                                       <img className='w-[18rem] h-[10rem] rounded-lg' src={course.thumbnail}/>
@@ -83,14 +80,14 @@ const InstructorCourse = () => {
                                     </div>
                                   </td>
                                   <td className='  text-center'>
-                                    {course.Duration}
+                                    {course.totalDuration? course.totalDuration :"0h"}
                                   </td>
                                   <td className='text-center'>
                                     {course.price}
                                   </td>
                                   <td className=' text-center'>
                                     <div className=' flex justify-center items-center gap-2'>
-                                      <button className='cursor-pointer' onClick={EditButton}>
+                                      <button className='cursor-pointer' onClick={()=>EditButton(course._id)}>
                                         <Edit2Icon/>
                                     </button>
                                     <button className=' text-2xl cursor-pointer' onClick={Deletebutton}>

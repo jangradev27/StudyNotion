@@ -1,9 +1,10 @@
 
 import { setUser } from "../../slices/authSlice";
 import { setProfileData, setUsersProfile } from "../../slices/profile";
-import { Auth, CourseApi, SettingApi } from "../api";
+import { Auth, CourseApi, profileapi, SettingApi } from "../api";
 import { apiConnector } from "../apiconnector";
 import toast from "react-hot-toast";
+import { Logout } from "./Auth";
 
 const {getUserEnrolledCourses_api}=CourseApi;
 const{Update_ProfilePic_api,UpdateUserName_api,UpdateProfile_api}=SettingApi;
@@ -146,4 +147,24 @@ export async function getUserEnrolledCourses(token){
         toast.dismiss(toastId);
         return result;
     
+}
+
+export const getUserDetails=(token,navigate)=>{
+    return async(dispatch)=>{
+        try{
+            const response=await apiConnector("GET",profileapi.getUserDetails_api,null,{
+                Authorization:`Bearer ${token}`
+            })
+            if(!response.data.success){
+                throw Error(response.data.message);
+            }
+            
+        }
+        catch(err){
+            
+            toast.error(err.response.data.message);
+            dispatch(Logout(navigate));
+            navigate("/login");
+        }
+    }
 }

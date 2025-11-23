@@ -3,6 +3,7 @@ import { addCourseDetails } from "./operation/Course"
 const BASE_URL = "http://localhost:9000/api/v1"
 export const categories={
     CATEGORIES_API:BASE_URL+"/course/AllCategory",
+    getCategoryPageData:BASE_URL+"/course/getCourseCategory"
 }
 
 export const Auth={
@@ -29,7 +30,8 @@ export const CourseApi={
     DeleteCourseSection_api:BASE_URL+"/course/DeleteSection",
     EditCourseSection_api:BASE_URL+"/course/UpdateSection",
     DeleteCourseSubsection_api:BASE_URL+"/course/DeleteSubSection",
-    EditCourseDetails_api:BASE_URL+"/course/editCourse"
+    EditCourseDetails_api:BASE_URL+"/course/editCourse",
+    DeleteCourse_api:BASE_URL+"/course/deleteCourse"
 }
 
 export const SettingApi={
@@ -39,6 +41,11 @@ export const SettingApi={
    
 
 }
+export const paymnetapi={
+    capturePayment:BASE_URL+"/payment/capture-payment",
+    verifyPayment:BASE_URL+"/payment/veriy-payment"
+}
+
 
 export const Contact={
     ContactUs_Api:BASE_URL+"/reach/contact",

@@ -22,7 +22,6 @@ const CourseBuilder = () => {
     }
     const onsubmit=(data)=>{
         const newData={...data,SectionId:editSectionName,Courseid:course._id};
-        console.log(newData)
         
         if(editSectionName ){
             dispatch(UpdateCourseSection(newData,token));
@@ -69,8 +68,8 @@ const CourseBuilder = () => {
                 <div className='flex flex-col gap-2'>
                     <label htmlFor='SectionName' className='text-rich-black-50 font-[400] text-lg'>
                     Section Name<sup className=' text-red-500'>*</sup></label>
-                    <input {...register("name",{required:true})}
-                        id='SectionName' className='outline-none'
+                    <input {...register("name",{required:true})}  className='outline-none p-2 rounded-lg bg-rich-black-600 h-[3rem]' 
+                        id='SectionName' 
                         placeholder='Add a Section to build your Course'
                     />
                     {

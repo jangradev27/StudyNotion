@@ -210,7 +210,7 @@ const CourseInformationForm = () => {
           register={register}
           setValue={setValue}
           getValues={getValues}
-            editData={editCourse?course?.thumbnail:null}
+          editData={editCourse?course?.thumbnail:null}
         />
 
         {/* What You Will Learn */}

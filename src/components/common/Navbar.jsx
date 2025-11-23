@@ -30,8 +30,9 @@ export const Navbar = () => {
   const fetchSubLinks = async () => {
     try {
       const result = await apiConnector('GET', categories.CATEGORIES_API);
-      
-      setSubLinks(result.data.Data);
+      const data=result.data.Data.map(cat=> ({...cat,Name:cat.Name.split(" ").join("-").toLowerCase()}))
+      console.log((data[0].Name))
+      setSubLinks(data);
     } catch (err) {
       console.error('Error fetching sublinks:', err.message); 
     }
@@ -72,7 +73,7 @@ export const Navbar = () => {
                         sublinks.map((sub, subIndex) => (
                           <NavLink
                             key={subIndex}
-                            to={`/${sub.Name}`}
+                            to={`/catalog/${sub.Name}`}
                             className="w-full p-2 flex text-lg hover:bg-rich-black-100 rounded-md transition-all duration-200"
                           >
                             {sub.Name}

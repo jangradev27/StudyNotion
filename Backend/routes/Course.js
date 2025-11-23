@@ -38,7 +38,7 @@ router.put("/editCourse",isAuth,isInstructor,editCourse)
 
 router.get("/getInstructorCourses",isAuth,isInstructor,getInstructorCourses)
 
-router.delete("/deleteCourse",deleteCourse);
+router.delete("/deleteCourse",isAuth,deleteCourse);
 // ------------------- SECTION ROUTES -------------------
 // creat section
 router.post("/CreateSection", isAuth, isInstructor, CreateSection);
@@ -62,7 +62,7 @@ router.delete("/DeleteSubSection", isAuth, isInstructor, deleteSubsection);
 
 
 // ------------------- CATEGORY ROUTES [ADMIN ONLY] -------------------
-// create tag
+// create tag 
 router.post("/CreateCategory", isAuth, isAdmin, CreateCategory);
 router.post("/getCourseCategory",getCourseCategory);
 // show all tags -[not admin]

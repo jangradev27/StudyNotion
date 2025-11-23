@@ -175,7 +175,6 @@ exports.getCourseDetails = async (req, res) => {
     });
     console.log(totalDurationInSeconds);
     const totalDuration = convertSecondsToDuration(totalDurationInSeconds);
-
     return res.status(200).json({
       success: true,
       data: {
@@ -304,7 +303,7 @@ exports.getInstructorCourses = async (req, res) => {
       course.totalDuration = convertSecondsToDuration(totalDurationInSeconds);
       return course;
     });
-        console.log(Courses)
+       
         return res.status(200).json({
             success: true,
             message: "Instructor courses fetched successfully",
@@ -325,7 +324,7 @@ exports.deleteCourse = async (req, res) => {
     try {
         const { CourseId } = req.body;
 
-        const course = await Course.findById(CourseId);
+        const course = await Course.findById(CourseId).populate({path:"CourseContent",populate:{path:"Subsection"}});
         if (!course) {
             return res.status(404).json({
                 success: false,
@@ -339,28 +338,28 @@ exports.deleteCourse = async (req, res) => {
             $pull: { Courses: CourseId }
         });
         const EnrolledStudents=course.EnrolledStudents;
+
         for(const id of EnrolledStudents){
           await User.findByIdAndUpdate(id,{$pull:{Courses:CourseId}});
         }
 
         const Sections=course.CourseContent;
-
         for(const sec of Sections){
           const subsection=sec.Subsection;
           for(const sub of subsection){
-            await SubSection.findByIdAndDelete(sub);
+            await SubSection.findByIdAndDelete(sub._d);
           }
-          await Section.findByIdAndDelete(sec)
+          await Section.findByIdAndDelete(sec._id)
         }
        
         await course.deleteOne();
 
-        // const Courses =await Course.find({Instructor:req.user.id});
+        const Courses =await Course.find({Instructor:req.user.id});
 
         return res.status(200).json({
             success: true,
             message: "Course deleted successfully",
-          
+            data:Courses
         });
 
     } catch (err) {

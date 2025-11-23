@@ -28,6 +28,9 @@ import InstructorCourse from './components/core/dashboard/InstructorCourses/Inst
 import AddCourse from './components/core/dashboard/AddCourse';
 import NotFound from './components/common/NotFound';
 import { getUserDetails } from './services/operation/profile';
+import Catalog from './pages/Catalog';
+import CourseDetails from './pages/CourseDetails';
+
 
 const{VerifyToken_api} =Auth;
 function App() {
@@ -50,6 +53,8 @@ function App() {
         <Route path='/' element={<Openroute>
           <Home/>
         </Openroute>} />
+
+           <Route path='/catalog/:catalogName' element={<Catalog/>}/>
 
         <Route path='/login' element={<Openroute>
           <Login/>
@@ -99,13 +104,14 @@ function App() {
 
              
           </Route>
-
+         
+              <Route path='/courses/:courseId' element={<CourseDetails/>}/>
 
           <Route path='*' element={<NotFound/>}/>
       
      </Routes>
 
-     
+
     
     </div>
   );

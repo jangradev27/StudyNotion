@@ -7,7 +7,7 @@ import { MdDeleteForever, MdDeleteOutline } from "react-icons/md";
 import CTAButton from '../../Homepage/CTAButton';
 import { Edit2Icon, XCircleIcon } from 'lucide-react';
 
-import { getCourseDetails, getInstructorCourses } from '../../../../services/operation/Course';
+import { DeleteCourse, getCourseDetails, getInstructorCourses } from '../../../../services/operation/Course';
 
 
 
@@ -30,7 +30,8 @@ const InstructorCourse = () => {
   }
 
   const Deletebutton=(CourseId)=>{
-  
+      const data={CourseId}
+      dispatch(DeleteCourse(data,token,setCourses));
   }
   
 
@@ -49,7 +50,7 @@ const InstructorCourse = () => {
                 Loading?(<div className='flex w-full h-full justify-center items-center'>
                     <div className='spinner'>
                     </div>
-                </div>):!Courses.length?(<p className='w-full text-center'>No Course Created yet</p>):(
+                </div>):!Courses?.length?(<p className='w-full text-center'>No Course Created yet</p>):(
                   <div className='  border-[1px]  border-rich-black-500 rounded-[10px_10px_0_0]  '>
                      <table className=' w-full  '>
                         <thead >
@@ -90,7 +91,7 @@ const InstructorCourse = () => {
                                       <button className='cursor-pointer' onClick={()=>EditButton(course._id)}>
                                         <Edit2Icon/>
                                     </button>
-                                    <button className=' text-2xl cursor-pointer' onClick={Deletebutton}>
+                                    <button className=' text-2xl cursor-pointer' onClick={()=>Deletebutton(course._id)}>
                                         <MdDeleteForever/>
                                     </button>
                                     </div>

@@ -250,3 +250,28 @@ export const editCourseDetails=async(data,token)=>{
     return result;
 
 }
+
+export const DeleteCourse=async(data,token,setCourses)=>{
+    console.log(data)
+    const toastId=toast.loading("Deleting Course");
+    
+        try{
+            const response=await apiConnector("DELETE",CourseApi.DeleteCourse_api,data,{
+                Authorization:`Bearer ${token}`
+            })
+            console.log(response);
+            if(!response.data.success){
+                throw new Error(response.data.message);
+            }
+
+            setCourses(response.data.data);
+            toast.success("Course Deleted");
+
+        }
+        catch(Err){
+            console.log(Err)
+            toast.error(Err.response.data.message);
+        }
+        toast.dismiss(toastId);
+   
+}
